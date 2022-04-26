@@ -14,4 +14,6 @@ package com.almasb.fxgl.entity;
  * @author Almas Baimagambetov (almaslvl@gmail.com)
  */
 public interface EntityFactory {
+
+     String getName();
 }

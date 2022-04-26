@@ -21,8 +21,4 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 public @interface Spawns {
 
-    /**
-     * @return name/type of the entity that this method spawns
-     */
-    String value();
 }

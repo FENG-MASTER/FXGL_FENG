@@ -306,17 +306,30 @@ class GameWorld {
     fun addEntityFactory(entityFactory: EntityFactory) {
         val entityNames = arrayListOf<String>()
 
+        val names=arrayListOf<String>()
+
+        if (entityFactory.name!=null){
+
+            val entityAliases = entityFactory.name.split(",".toRegex())
+            entityAliases.forEach { entityName ->
+                checkDuplicateSpawners(entityFactory, entityName)
+                names.add(entityName)
+            }
+        }
+
+
         ReflectionUtils.findMethodsMapToFunctions<SpawnData, Entity, Spawns>(entityFactory, Spawns::class.java)
                 .forEach { annotation, entitySpawner ->
-                    
-                    val entityAliases = annotation.value.split(",".toRegex())
-                    entityAliases.forEach { entityName ->
+
+                    names.forEach { entityName ->
                         checkDuplicateSpawners(entityFactory, entityName)
 
                         entitySpawners.put(entityName, entitySpawner)
                         entityNames.add(entityName)
                     }
                 }
+
+
 
 //        ReflectionUtils.findMethods(entityFactory, Preload::class.java)
 //                .forEach { preload, method ->
